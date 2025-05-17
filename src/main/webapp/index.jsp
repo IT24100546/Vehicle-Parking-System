@@ -1,3 +1,4 @@
+
 <%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="UTF-8" %>
 <!DOCTYPE html>
 <html lang="en">
@@ -166,6 +167,7 @@
         &copy; 2025 Smart Park. All rights reserved.
     </div>
 </footer>
+
 
 </body>
 </html>
