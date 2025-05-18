@@ -133,6 +133,7 @@ public class LocationService {
             for (LocationModel location : locations) {
                 writer.write(formatLocation(location));
                 writer.newLine();
+                System.out.println("Saved location: " + DATA_FILE+location);
             }
         }
     }

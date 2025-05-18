@@ -40,7 +40,7 @@ public class LocationViews extends HttpServlet {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        req.getRequestDispatcher("/index.jsp").forward(req, resp);
+        req.getRequestDispatcher("/LocationDashboard.jsp").forward(req, resp);
     }
 
     private void showCreate(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
