@@ -1,45 +1,46 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Create User</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+    <title>Create Location</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <script>
+        var contextPath = "${pageContext.request.contextPath}";
+    </script>
 </head>
 <body class="bg-gray-100 min-h-screen flex items-center justify-center">
     <div class="bg-white shadow-lg rounded-lg p-8 w-full max-w-md">
         <div class="flex items-center justify-between mb-6">
-            <h2 class="text-2xl font-bold text-gray-900">Create User</h2>
-            <button onclick="window.location.href='<%= request.getContextPath() %>/'" class="px-3 py-1 rounded bg-gray-200 hover:bg-gray-300 text-gray-700 transition">Back</button>
+            <h2 class="text-2xl font-bold text-gray-900">Create Location</h2>
+            <a href="${pageContext.request.contextPath}/" class="px-3 py-1 rounded bg-gray-200 hover:bg-gray-300 text-gray-700 transition">Back</a>
         </div>
-        <form id="createUserForm" class="space-y-4">
+        <form id="createLocationForm" class="space-y-4">
             <div>
                 <label class="block text-sm font-medium text-gray-700 mb-1">Name</label>
-                <input type="text" id="name" name="name" required class="w-full px-3 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-gray-400" placeholder="Full Name">
-                <span id="nameError" class="text-xs text-red-500 hidden">Name must be 2-50 letters.<br><span class="text-gray-400">e.g. John Doe</span></span>
+                <input type="text" id="name" name="name" required class="w-full px-3 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-gray-400" placeholder="Location Name">
+                <span id="nameError" class="text-xs text-red-500 hidden">Name must be 2-50 letters.</span>
             </div>
             <div>
-                <label class="block text-sm font-medium text-gray-700 mb-1">Email Address</label>
-                <input type="email" id="emailAddress" name="emailAddress" required class="w-full px-3 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-gray-400" placeholder="Email">
-                <span id="emailError" class="text-xs text-red-500 hidden">Invalid email address.<br><span class="text-gray-400">e.g. john@example.com</span></span>
+                <label class="block text-sm font-medium text-gray-700 mb-1">Slot ID</label>
+                <input type="text" id="slotId" name="slotId" required class="w-full px-3 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-gray-400" placeholder="Slot ID">
+                <span id="slotIdError" class="text-xs text-red-500 hidden">Slot ID must be 2-20 alphanumeric.</span>
             </div>
             <div>
-                <label class="block text-sm font-medium text-gray-700 mb-1">Role</label>
-                <select id="role" name="role" required class="w-full px-3 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-gray-400">
-                    <option value="">Select Role</option>
-                    <option value="admin">Admin</option>
-                    <option value="staff">Staff</option>
-                    <option value="user">User</option>
+                <label class="block text-sm font-medium text-gray-700 mb-1">Type</label>
+                <select id="type" name="type" required class="w-full px-3 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-gray-400">
+                    <option value="">Select Type</option>
+                    <option value="vip">VIP</option>
+                    <option value="regular">Regular</option>
                 </select>
-                <span id="roleError" class="text-xs text-red-500 hidden">Please select a role.<br><span class="text-gray-400">e.g. Admin</span></span>
+                <span id="typeError" class="text-xs text-red-500 hidden">Please select a type.</span>
             </div>
             <div>
-                <label class="block text-sm font-medium text-gray-700 mb-1">Username</label>
-                <input type="text" id="username" name="username" required class="w-full px-3 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-gray-400" placeholder="Username">
-                <span id="usernameError" class="text-xs text-red-500 hidden">Username must be 4-20 letters, numbers, or underscores.<br><span class="text-gray-400">e.g. johndoe_123</span></span>
-            </div>
-            <div>
-                <label class="block text-sm font-medium text-gray-700 mb-1">Password</label>
-                <input type="password" id="password" name="password" required class="w-full px-3 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-gray-400" placeholder="Password">
-                <span id="passwordError" class="text-xs text-red-500 hidden">Password must be at least 6 characters.<br><span class="text-gray-400">e.g. secret1</span></span>
+                <label class="block text-sm font-medium text-gray-700 mb-1">Available</label>
+                <select id="availabilityStatus" name="availabilityStatus" required class="w-full px-3 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-gray-400">
+                    <option value="">Select</option>
+                    <option value="true">Yes</option>
+                    <option value="false">No</option>
+                </select>
+                <span id="availabilityError" class="text-xs text-red-500 hidden">Please select availability.</span>
             </div>
             <button type="submit" id="submitBtn" class="w-full py-2 px-4 bg-gray-900 text-white rounded hover:bg-gray-700 transition flex items-center justify-center">
                 <span id="submitText">Create</span>
@@ -52,59 +53,57 @@
     </div>
     <script>
         // Regex patterns
-        const patterns = {
+        var patterns = {
             name: /^[A-Za-z\s]{2,50}$/,
-            emailAddress: /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/,
-            username: /^[A-Za-z0-9_]{4,20}$/,
-            password: /^.{6,}$/
+            slotId: /^[A-Za-z0-9]{2,20}$/
         };
 
         function showError(id, show) {
             document.getElementById(id).classList.toggle('hidden', !show);
         }
 
-        document.getElementById('createUserForm').addEventListener('submit', async function(e) {
+        document.getElementById('createLocationForm').addEventListener('submit', async function(e) {
             e.preventDefault();
-            let valid = true;
+            var valid = true;
 
-            // Validate fields
-            const name = document.getElementById('name').value.trim();
-            const email = document.getElementById('emailAddress').value.trim();
-            const role = document.getElementById('role').value;
-            const username = document.getElementById('username').value.trim();
-            const password = document.getElementById('password').value;
+            var name = document.getElementById('name').value.trim();
+            var slotId = document.getElementById('slotId').value.trim();
+            var type = document.getElementById('type').value;
+            var availabilityStatus = document.getElementById('availabilityStatus').value;
 
             showError('nameError', !patterns.name.test(name));
-            showError('emailError', !patterns.emailAddress.test(email));
-            showError('roleError', !role);
-            showError('usernameError', !patterns.username.test(username));
-            showError('passwordError', !patterns.password.test(password));
+            showError('slotIdError', !patterns.slotId.test(slotId));
+            showError('typeError', !type);
+            showError('availabilityError', !availabilityStatus);
 
             if (!patterns.name.test(name)) valid = false;
-            if (!patterns.emailAddress.test(email)) valid = false;
-            if (!role) valid = false;
-            if (!patterns.username.test(username)) valid = false;
-            if (!patterns.password.test(password)) valid = false;
+            if (!patterns.slotId.test(slotId)) valid = false;
+            if (!type) valid = false;
+            if (!availabilityStatus) valid = false;
 
             if (!valid) return;
 
-            // Loading state
             document.getElementById('submitBtn').disabled = true;
             document.getElementById('submitText').classList.add('opacity-50');
             document.getElementById('loadingSpinner').classList.remove('hidden');
 
             try {
-                const response = await fetch('<%= request.getContextPath() %>/api/users', {
+                var response = await fetch(contextPath + '/api/locations', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ name, emailAddress: email, role, username, password })
+                    body: JSON.stringify({
+                        name: name,
+                        slotId: slotId,
+                        type: type,
+                        availabilityStatus: availabilityStatus === 'true'
+                    })
                 });
-                const data = await response.json();
+                var data = await response.json();
                 if (response.ok) {
-                    alert('User created successfully!');
-                    window.location.href = '<%= request.getContextPath() %>/';
+                    alert('Location created successfully!');
+                    window.location.href = contextPath + '/';
                 } else {
-                    alert(data.error || 'Failed to create user.');
+                    alert(data.error || 'Failed to create location.');
                 }
             } catch (err) {
                 alert('An error occurred. Please try again.');

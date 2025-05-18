@@ -1,160 +1,197 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Edit User</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        var contextPath = "<%= request.getContextPath() %>";
-        function getQueryParam(name) {
-            var url = new URL(window.location.href);
-            return url.searchParams.get(name);
-        }
-    </script>
+    <title>Edit Location</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
 </head>
-<body class="bg-gray-100 min-h-screen flex items-center justify-center">
-    <div class="bg-white shadow-lg rounded-lg p-8 w-full max-w-md">
-        <div class="flex items-center justify-between mb-6">
-            <h2 class="text-2xl font-bold text-gray-900">Edit User</h2>
-            <button onclick="window.location.href=contextPath+'/'" class="px-3 py-1 rounded bg-gray-200 hover:bg-gray-300 text-gray-700 transition">Back</button>
-        </div>
-        <form id="editUserForm" class="space-y-4">
-            <div>
-                <label class="block text-sm font-medium text-gray-700 mb-1">Name</label>
-                <input type="text" id="name" name="name" required class="w-full px-3 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-gray-400" placeholder="Full Name">
-                <span id="nameError" class="text-xs text-red-500 hidden">Name must be 2-50 letters.<br><span class="text-gray-400">e.g. John Doe</span></span>
-            </div>
-            <div>
-                <label class="block text-sm font-medium text-gray-700 mb-1">Email Address</label>
-                <input type="email" id="emailAddress" name="emailAddress" required class="w-full px-3 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-gray-400" placeholder="Email">
-                <span id="emailError" class="text-xs text-red-500 hidden">Invalid email address.<br><span class="text-gray-400">e.g. john@example.com</span></span>
-            </div>
-            <div>
-                <label class="block text-sm font-medium text-gray-700 mb-1">Role</label>
-                <select id="role" name="role" required class="w-full px-3 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-gray-400">
-                    <option value="">Select Role</option>
-                    <option value="admin">Admin</option>
-                    <option value="staff">Staff</option>
-                    <option value="user">User</option>
-                </select>
-                <span id="roleError" class="text-xs text-red-500 hidden">Please select a role.<br><span class="text-gray-400">e.g. Admin</span></span>
-            </div>
-            <div>
-                <label class="block text-sm font-medium text-gray-700 mb-1">Username</label>
-                <input type="text" id="username" name="username" required class="w-full px-3 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-gray-400" placeholder="Username" readonly>
-                <span id="usernameError" class="text-xs text-red-500 hidden">Username must be 4-20 letters, numbers, or underscores.<br><span class="text-gray-400">e.g. johndoe_123</span></span>
-            </div>
-            <div>
-                <label class="block text-sm font-medium text-gray-700 mb-1">Password</label>
-                <input type="password" id="password" name="password" required class="w-full px-3 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-gray-400" placeholder="Password">
-                <span id="passwordError" class="text-xs text-red-500 hidden">Password must be at least 6 characters.<br><span class="text-gray-400">e.g. secret1</span></span>
-            </div>
-            <button type="submit" id="submitBtn" class="w-full py-2 px-4 bg-gray-900 text-white rounded hover:bg-gray-700 transition flex items-center justify-center">
-                <span id="submitText">Update</span>
-                <svg id="loadingSpinner" class="animate-spin h-5 w-5 ml-2 text-white hidden" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                  <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-                  <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8z"></path>
+<body class="bg-gray-50 min-h-screen">
+    <div class="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div class="sm:flex sm:items-center sm:justify-between mb-8">
+            <h1 class="text-2xl font-bold text-gray-900">Edit Location</h1>
+            <a href="${pageContext.request.contextPath}/"
+               class="inline-flex items-center px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                <svg class="mr-2 -ml-1 h-5 w-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
                 </svg>
-            </button>
-        </form>
+                Back
+            </a>
+        </div>
+
+        <div class="bg-white shadow rounded-lg p-6">
+            <form id="editLocationForm" class="space-y-6">
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Name</label>
+                    <input type="text" id="name" name="name" required
+                           class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500">
+                    <span id="nameError" class="mt-1 text-xs text-red-600 hidden">Name must be 2-50 letters</span>
+                </div>
+
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Slot ID</label>
+                    <input type="text" id="slotId" name="slotId" required
+                           class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500">
+                    <span id="slotIdError" class="mt-1 text-xs text-red-600 hidden">Slot ID must be 2-20 alphanumeric characters</span>
+                </div>
+
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Type</label>
+                    <select id="type" name="type" required
+                            class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500">
+                        <option value="">Select Type</option>
+                        <option value="vip">VIP</option>
+                        <option value="regular">Regular</option>
+                    </select>
+                    <span id="typeError" class="mt-1 text-xs text-red-600 hidden">Please select a type</span>
+                </div>
+
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Availability Status</label>
+                    <select id="availabilityStatus" name="availabilityStatus" required
+                            class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500">
+                        <option value="">Select Status</option>
+                        <option value="true">Available</option>
+                        <option value="false">Not Available</option>
+                    </select>
+                    <span id="availabilityError" class="mt-1 text-xs text-red-600 hidden">Please select availability status</span>
+                </div>
+
+                <div class="flex justify-end space-x-3">
+                    <button type="submit" id="submitBtn"
+                            class="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                        <span id="submitText">Update Location</span>
+                        <svg id="loadingSpinner" class="animate-spin ml-2 h-5 w-5 text-white hidden" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8z"></path>
+                        </svg>
+                    </button>
+                </div>
+            </form>
+        </div>
     </div>
+
     <script>
-        // Regex patterns
-        const patterns = {
+        var contextPath = '${pageContext.request.contextPath}';
+        var locationId = window.location.search.split('=')[1];
+        var isLoading = false;
+
+        var patterns = {
             name: /^[A-Za-z\s]{2,50}$/,
-            emailAddress: /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/,
-            username: /^[A-Za-z0-9_]{4,20}$/,
-            password: /^.{6,}$/
+            slotId: /^[A-Za-z0-9]{2,20}$/
         };
 
         function showError(id, show) {
-            document.getElementById(id).classList.toggle('hidden', !show);
+            var errorElement = document.getElementById(id + 'Error');
+            if (errorElement) {
+                errorElement.classList.toggle('hidden', !show);
+            }
         }
 
-        // Fetch user data and populate form
-        document.addEventListener("DOMContentLoaded", function() {
-            var userId = getQueryParam("id");
-            if (!userId) {
-                alert("No user ID provided.");
-                window.location.href = contextPath + "/";
-                return;
+        function setLoading(loading) {
+            isLoading = loading;
+            var submitBtn = document.getElementById('submitBtn');
+            var submitText = document.getElementById('submitText');
+            var loadingSpinner = document.getElementById('loadingSpinner');
+            
+            if (submitBtn && submitText && loadingSpinner) {
+                submitBtn.disabled = loading;
+                submitText.classList.toggle('opacity-50', loading);
+                loadingSpinner.classList.toggle('hidden', !loading);
             }
-            document.getElementById('submitBtn').disabled = true;
-            document.getElementById('submitText').classList.add('opacity-50');
-            document.getElementById('loadingSpinner').classList.remove('hidden');
-            fetch(contextPath + "/api/users/" + encodeURIComponent(userId))
-                .then(function(response) {
-                    if (!response.ok) throw new Error("User not found");
-                    return response.json();
-                })
-                .then(function(user) {
-                    document.getElementById('name').value = user.name || "";
-                    document.getElementById('emailAddress').value = user.emailAddress || "";
-                    document.getElementById('role').value = user.role || "";
-                    document.getElementById('username').value = user.username || "";
-                    document.getElementById('password').value = user.password || "";
-                })
-                .catch(function() {
-                    alert("Failed to load user.");
-                    window.location.href = contextPath + "/";
-                })
-                .finally(function() {
-                    document.getElementById('submitBtn').disabled = false;
-                    document.getElementById('submitText').classList.remove('opacity-50');
-                    document.getElementById('loadingSpinner').classList.add('hidden');
-                });
-        });
+        }
 
-        document.getElementById('editUserForm').addEventListener('submit', async function(e) {
+        function redirectWithMessage(message) {
+            window.location.href = contextPath + '/?message=' + encodeURIComponent(message);
+        }
+
+        // Show loading state while fetching initial data
+        setLoading(true);
+
+        // Fetch location data
+        fetch(contextPath + '/api/locations/' + locationId)
+            .then(function(response) { 
+                if (!response.ok) {
+                    throw new Error('Failed to fetch location');
+                }
+                return response.json(); 
+            })
+            .then(function(location) {
+                document.getElementById('name').value = location.name;
+                document.getElementById('slotId').value = location.slotId;
+                document.getElementById('type').value = location.type;
+                document.getElementById('availabilityStatus').value = location.availabilityStatus.toString();
+            })
+            .catch(function(error) {
+                alert('Failed to load location data');
+                console.error('Error:', error);
+            })
+            .finally(function() {
+                setLoading(false);
+            });
+
+        document.getElementById('editLocationForm').addEventListener('submit', function(e) {
             e.preventDefault();
-            let valid = true;
+            if (isLoading) return;
+
+            var valid = true;
+            var name = document.getElementById('name').value.trim();
+            var slotId = document.getElementById('slotId').value.trim();
+            var type = document.getElementById('type').value;
+            var availabilityStatus = document.getElementById('availabilityStatus').value;
+
+            // Clear previous errors
+            showError('name', false);
+            showError('slotId', false);
+            showError('type', false);
+            showError('availabilityStatus', false);
 
             // Validate fields
-            const name = document.getElementById('name').value.trim();
-            const email = document.getElementById('emailAddress').value.trim();
-            const role = document.getElementById('role').value;
-            const username = document.getElementById('username').value.trim();
-            const password = document.getElementById('password').value;
-
-            showError('nameError', !patterns.name.test(name));
-            showError('emailError', !patterns.emailAddress.test(email));
-            showError('roleError', !role);
-            showError('usernameError', !patterns.username.test(username));
-            showError('passwordError', !patterns.password.test(password));
-
-            if (!patterns.name.test(name)) valid = false;
-            if (!patterns.emailAddress.test(email)) valid = false;
-            if (!role) valid = false;
-            if (!patterns.username.test(username)) valid = false;
-            if (!patterns.password.test(password)) valid = false;
+            if (!patterns.name.test(name)) {
+                showError('name', true);
+                valid = false;
+            }
+            if (!patterns.slotId.test(slotId)) {
+                showError('slotId', true);
+                valid = false;
+            }
+            if (!type) {
+                showError('type', true);
+                valid = false;
+            }
+            if (!availabilityStatus) {
+                showError('availabilityStatus', true);
+                valid = false;
+            }
 
             if (!valid) return;
 
-            // Loading state
-            document.getElementById('submitBtn').disabled = true;
-            document.getElementById('submitText').classList.add('opacity-50');
-            document.getElementById('loadingSpinner').classList.remove('hidden');
+            setLoading(true);
 
-            var userId = getQueryParam("id");
-            try {
-                const response = await fetch(contextPath + "/api/users/" + encodeURIComponent(userId), {
-                    method: 'PUT',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ name, emailAddress: email, role, username, password })
-                });
-                const data = await response.json();
-                if (response.ok) {
-                    alert('User updated successfully!');
-                    window.location.href = contextPath + "/";
-                } else {
-                    alert(data.error || 'Failed to update user.');
+            fetch(contextPath + '/api/locations/' + locationId, {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    name: name,
+                    slotId: slotId,
+                    type: type,
+                    availabilityStatus: availabilityStatus === 'true'
+                })
+            })
+            .then(function(response) {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
                 }
-            } catch (err) {
-                alert('An error occurred. Please try again.');
-            } finally {
-                document.getElementById('submitBtn').disabled = false;
-                document.getElementById('submitText').classList.remove('opacity-50');
-                document.getElementById('loadingSpinner').classList.add('hidden');
-            }
+                return response.json();
+            })
+            .then(function() {
+                redirectWithMessage('Location updated successfully!');
+            })
+            .catch(function(error) {
+                alert('Failed to update location');
+                console.error('Error:', error);
+            })
+            .finally(function() {
+                setLoading(false);
+            });
         });
     </script>
 </body>
