@@ -1,12 +1,12 @@
 package model;
 
 public class Payment {
-    protected String id;
-    protected String vehicleNumber;
-    protected String paymentType;
-    protected double amount;
-    protected String status;
-    protected String timestamp;
+    private String id;
+    private String vehicleNumber;
+    private String paymentType;
+    private double amount;
+    private String status;
+    private String timestamp;
 
     public Payment(String vehicleNumber, double amount, String status, String timestamp, String paymentType) {
         id = null;
