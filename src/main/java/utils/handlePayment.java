@@ -7,7 +7,7 @@ import java.util.LinkedList;
 
 public class handlePayment {
     private LinkedList<Payment> payments = new LinkedList<>();
-    private final String FILE_PATH = "D:\\OOP_Project_Payment\\Data\\payments.txt";
+    private final String FILE_PATH = "C:\\ParkingSystemData\\payments.txt";
     private int lastPaymentId = 0;
 
     private String generatePaymentId() {

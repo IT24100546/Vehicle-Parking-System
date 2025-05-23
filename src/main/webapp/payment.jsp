@@ -117,6 +117,6 @@
 </div>
 <% } %>
 
-<a href="index.jsp" class="back-link">Back to Home</a>
+<a href="PaymentDashboard.jsp" class="back-link">Back to Home</a>
 </body>
 </html>

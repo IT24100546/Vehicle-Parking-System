@@ -132,6 +132,6 @@
 <% } %>
 <% } %>
 
-<a href="index.jsp" class="back-link">Back to Main</a>
+<a href="PaymentDashboard.jsp" class="back-link">Back to Main</a>
 </body>
 </html>

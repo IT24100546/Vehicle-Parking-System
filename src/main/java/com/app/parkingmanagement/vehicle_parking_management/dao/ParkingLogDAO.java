@@ -10,7 +10,7 @@ import java.time.*;
 import java.time.format.DateTimeFormatter;
 
 public class ParkingLogDAO {
-    private static final String FILE_PATH = "C:\\226-parking\\parking_log.txt";
+    private static final String FILE_PATH = "C:\\ParkingSystemData\\parking_log.txt";
     private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
     static {

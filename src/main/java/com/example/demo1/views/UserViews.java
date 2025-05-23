@@ -3,12 +3,14 @@ package com.example.demo1.views;
 import com.example.demo1.models.User;
 import com.example.demo1.services.UserService;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
 
+@WebServlet("/create")
 public class UserViews extends HttpServlet {
     private UserService userService = new UserService();
 
